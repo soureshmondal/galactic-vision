@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalacticVision Constellation Explorer</title>
+    
+    
+    <link rel="stylesheet" href="https://unpkg.com/locomotive-scroll/dist/locomotive-scroll.min.css">
+    <script src="https://unpkg.com/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollSmoother.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+
+      
+</head>
+<body>
+    <div id="root"></div>
+    <header class="header">
+        <div class="nav">
+            <div class="logo">GalacticVision</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#upload">Upload</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </header>
+    <section class="hero">
+        <div id="space-container"></div>
+        <div class="hero-content">
+            <h1>Discover the Cosmos</h1>
+            <p>Uncover the hidden patterns of the night sky with our advanced constellation detection technology.</p>
+            <a href="#upload" class="cta-button">Start Exploring</a>
+        </div>
+    </section>
+    
+
+    <section id="features" class="features section">
+        <div class="feature">
+            <img src="image/image1.jpeg" alt="AI-Powered">
+            <h2>AI-Powered</h2>
+            <p>Our cutting-edge AI accurately identifies constellations in your night sky images.</p>
+        </div>
+        <div class="feature">
+            <img src="image/image2.png" alt="Star Map">
+            <h2>Star Map</h2>
+            <p>Explore the interactive star map and learn about the night sky.</p>
+        </div>
+        <div class="feature">
+            <img src="image/image3.jpg" alt="Learn As You Explore">
+            <h2>Learn As You Explore</h2>
+            <p>Dive deep into the myths and science behind each constellation.</p>
+        </div>
+    </section>
+    
+
+    <section id="upload" class="upload-section section">
+        <div id="stars-container"></div>
+        <div class="upload-container">
+            <input type="file" id="image-upload" accept="image/*">
+            <label for="image-upload" class="upload-btn">Upload Image</label>
+            
+            <div class="image-container">
+                <div class="original-image">
+                    <h3>Original Image</h3>
+                    <img id="image-preview" src="" alt="Image Preview">
+                </div>
+                <div class="processed-image">
+                    <h3>Processed Image</h3>
+                    <img id="processed-preview" src="" alt="Processed Image">
+                </div>
+            </div>
+            
+            <div id="result"></div>
+            <div class="loading">Processing your image...</div>
+        </div>
+    </section>
+    
+
+    <footer class="footer">
+        <p>&copy; 2024 GalacticVision Constellation Explorer. All rights reserved.</p>
+    </footer>
+
+    <script>
+        //JavaScript for scrolling effects
+        function handleScroll() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= windowHeight * 0.75 && rect.bottom >= windowHeight * 0.25) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        // Three.js scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            powerPreference: "high-performance",
+            antialias: false
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('space-container').appendChild(renderer.domElement);
+
+        // Load 3D Model
+        const loader = new THREE.GLTFLoader();
+        loader.load('/3d_model/starry_galaxy_sky_hdri_background_photosphere.glb', function (gltf) {
+            const model = gltf.scene;
+            scene.add(model);
+            model.position.set(0, 0, 0);
+            model.scale.set(1, 1, 1);
+
+        // Smooth rotation with GSAP
+        gsap.to(model.rotation, {
+            y: "+=6.28", // Rotate a full circle over time
+            duration: 10,
+            repeat: -1, // Repeat indefinitely
+            ease: "none"
+        });
+
+        function animate() {
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }, function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    }, function (error) {
+        console.error('An error occurred loading the model:', error);
+    });
+
+    camera.position.z = 100;
+
+    // Smooth zoom using GSAP on scroll
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        gsap.to(camera.position, {
+            z: 100 + scrollY * 2,
+            duration: 0.5, // Smooth transition duration
+            ease: "power2.out" // Easing for smooth zoom
+        });
+    });
+
+    // Window resize handling
+    window.addEventListener('resize', function() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+        // image upload handling
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const processedPreview = document.getElementById('processed-preview');
+        const result = document.getElementById('result');
+        const loading = document.querySelector('.loading');
+
+        imageUpload.addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+
+                loading.style.display = 'block';
+                result.textContent = '';
+                processedPreview.style.display = 'none';
+
+                
+                const response = await fetch('http://localhost:5000/detect', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    credentials: 'omit' 
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+        
+                const blob = await response.blob();
+                const processedImageUrl = URL.createObjectURL(blob);
+                processedPreview.src = processedImageUrl;
+                processedPreview.style.display = 'block';
+
+        
+                const detections = response.headers.get('X-Detections');
+                if (detections) {
+                    const detectionsList = detections.split(';')
+                        .map(detection => {
+                            const [constellation, confidence] = detection.split(':');
+                            return `${constellation} (${confidence}% confidence)`;
+                        })
+                        .join('\n');
+                    result.textContent = 'Detected Constellations:\n' + detectionsList;
+                }
+
+            
+
+            } catch (error) {
+                console.error('Error processing image:', error);
+                result.textContent = 'Error processing image. Please try again.';
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        const uploadScene = new THREE.Scene();
+        const uploadCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const uploadRenderer = new THREE.WebGLRenderer({ alpha: true });
+        uploadRenderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('stars-container').appendChild(uploadRenderer.domElement);
+
+        // Create and add stars to the upload section
+        const starsGeometry = new THREE.BufferGeometry();
+        const starsMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 0.5 });
+        const starsVertices = [];
+
+        for (let i = 0; i < 10000; i++) {
+            const x = (Math.random() - 0.5) * 2000;
+            const y = (Math.random() - 0.5) * 2000;
+            const z = -Math.random() * 2000;
+            starsVertices.push(x, y, z);
+        }
+
+        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        uploadScene.add(stars);
+
+        uploadCamera.position.z = 1;
+
+        function animateStars() {
+            requestAnimationFrame(animateStars);
+            stars.rotation.y += 0.0002;
+            stars.rotation.x += 0.0001;
+            uploadRenderer.render(uploadScene, uploadCamera);
+        }
+        animateStars();
+
+        // Resize handling for upload section
+        window.addEventListener('resize', function() {
+            uploadCamera.aspect = window.innerWidth / window.innerHeight;
+            uploadCamera.updateProjectionMatrix();
+            uploadRenderer.setSize(window.innerWidth, window.innerHeight);
+    });   
+    </script>
+</body>
+</html>
