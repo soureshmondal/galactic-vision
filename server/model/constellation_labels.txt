@@ -1,0 +1,16 @@
+ aquila
+ bootes
+ canis_major
+ canis_minor
+ cassiopeia
+ cygnus
+ gemini
+ leo
+ lyra
+ moon
+ orion
+ pleiades
+ sagittarius
+ scorpius
+ taurus
+ ursa_major
