@@ -111,7 +111,7 @@ h1 {
 }
 
 /* New Start Exploring button styles */
-.cta-button {
+/* .cta-button {
     display: inline-block;
     padding: 15px 30px;
     font-size: 18px;
@@ -164,7 +164,47 @@ h1 {
         left: 100%;
         opacity: 0;
     }
+} */
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+    background: var(--neon-blue);
+    border: none;
+    border-radius: 30px;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse-glow 2s infinite ease-in-out;
+    z-index: 1;
+    cursor: pointer;
 }
+
+.cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+    }
+    100% {
+        box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+    }
+}
+
 
 .features {
     display: flex;
