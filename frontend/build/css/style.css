@@ -167,26 +167,57 @@ h1 {
 } */
 
 .cta-button {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 18px;
-    text-decoration: none;
-    color: white;
-    background-color: var(--neon-blue);
-    border: none;
-    border-radius: 30px;
-    text-align: center;
-    margin-top: 30px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
+  position: relative;
+  color: #FFF;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
-.cta-button:hover {
-    transform: scale(1.05);
-    background-color: #00bfff; /* slightly lighter blue on hover */
+/* Base btn-two style */
+.btn-two {
+  transition: all 0.5s;
+}
+
+.btn-two span {
+  z-index: 2; 
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 48px;
+  text-align: center;
+}
+
+/* Hover effect layers */
+.btn-two::before,
+.btn-two::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1);
+}
+
+.btn-two:hover::before {
+  transform: rotate(-45deg);
+  background-color: rgba(255,255,255,0);
+}
+
+.btn-two:hover::after {
+  transform: rotate(45deg);
+  background-color: rgba(255,255,255,0);
 }
 
 .features {
