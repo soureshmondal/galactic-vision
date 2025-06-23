@@ -2,8 +2,6 @@
 
 **Galactic Vision** is an AI-powered constellation detection system that uses machine learning and computer vision to recognize star constellations from night sky images. Designed to make stargazing more accessible, this project combines deep learning with a beautiful frontend and real-time prediction capabilities.
 
-![Galactic Vision Demo](demo.gif) <!-- Optional demo GIF or image -->
-
 ---
 
 ## 🚀 Features
@@ -16,18 +14,9 @@
 
 ---
 
-## 🖼️ Sample Output
-
-| Input Image | Detected Constellation |
-|-------------|------------------------|
-| ![Sample1](samples/sample1.jpg) | Orion |
-| ![Sample2](samples/sample2.jpg) | Ursa Major |
-
----
-
 ## 🧠 Model Architecture
 
-- **Backbone:** Vision Transformer (ViT) / ResNet (configurable)
+- **Backbone:** DenseNet 
 - **Frameworks:** TensorFlow 
 - **Training Dataset:** Real-world annotated constellation images
 - **Techniques:** Image preprocessing, data augmentation, fine-tuning
@@ -61,14 +50,14 @@ cd backend
 pip install -r requirements.txt
 python app.py
 ```
- Frontend Setup
- ```
+### Frontend Setup
+ ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Model Training (Optional)
+### Model Training (Optional)
 If you'd like to train your own model:
 ```
 cd training
