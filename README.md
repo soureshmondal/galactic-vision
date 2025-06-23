@@ -28,8 +28,8 @@
 ## 🧠 Model Architecture
 
 - **Backbone:** Vision Transformer (ViT) / ResNet (configurable)
-- **Frameworks:** PyTorch / TensorFlow (based on config)
-- **Training Dataset:** Synthesized + Real-world annotated constellation images
+- **Frameworks:** TensorFlow 
+- **Training Dataset:** Real-world annotated constellation images
 - **Techniques:** Image preprocessing, data augmentation, fine-tuning
 
 ---
@@ -40,7 +40,7 @@
 |------------|---------------------------------------------|
 | Frontend   | HTML,CSS,Javascript, Three.js (3D Sky View) |
 | Backend    | Flask (Python)                              |
-| Model      | PyTorch / TensorFlow                        |
+| Model      | TensorFlow                                  |
 | Hosting    | Hugging face (backend) + Vercel (frontend)  |
 | Data       | Custom-labeled constellation dataset        |
 
