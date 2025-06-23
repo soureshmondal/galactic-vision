@@ -13,7 +13,6 @@
 - 📱 **Interactive Web Interface (Frontend with 3D sky view)**
 - 🌐 **API-Driven Flask Backend**
 - 🎯 **High Accuracy on Real-world Sky Images**
-- 🔊 **Audio Feedback (optional for accessibility)**
 
 ---
 
@@ -37,18 +36,13 @@
 
 ## 🕸️ Tech Stack
 
-| Component   | Tech Used                        |
-|------------|----------------------------------|
-| Frontend   | React.js, Three.js (3D Sky View) |
-| Backend    | Flask (Python)                   |
-| Model      | PyTorch / TensorFlow             |
-| Hosting    | Railway (backend) + Vercel (frontend) |
-| Data       | Custom-labeled celestial dataset |
-
----
-
-## 📁 Project Structure
-
+| Component   | Tech Used                                  |
+|------------|---------------------------------------------|
+| Frontend   | HTML,CSS,Javascript, Three.js (3D Sky View) |
+| Backend    | Flask (Python)                              |
+| Model      | PyTorch / TensorFlow                        |
+| Hosting    | Hugging face (backend) + Vercel (frontend)  |
+| Data       | Custom-labeled constellation dataset        |
 
 ---
 
