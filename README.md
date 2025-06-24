@@ -59,15 +59,15 @@ npm run dev
 
 ### Model Training (Optional)
 If you'd like to train your own model:
+use galactic-vision-train.ipynb
 ```
-cd training
-python train.py --config configs/vit.yaml
+cd server
 ```
 
 Deployment
 Frontend deployed via Vercel
 
-Backend deployed via Railway
+Backend deployed via HuggingFace
 
 Configure CORS and update API endpoints accordingly
 
